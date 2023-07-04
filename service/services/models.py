@@ -20,8 +20,7 @@ class Plan(models.Model):
                                  max_length=10)
     discount_percent = models.PositiveSmallIntegerField('Discount_percent', default=0,
                                                         validators=[
-                                                            MaxValueValidator(100)
-                                                        ])
+                                                            MaxValueValidator(100)])
 
 
 class Subscription(models.Model):
