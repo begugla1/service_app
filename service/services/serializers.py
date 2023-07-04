@@ -8,8 +8,8 @@ class SubscriptionSerializer(serializers.ModelSerializer):
                                             max_length=255)
     client_company_name = serializers.CharField(source='client.company_name',
                                                 max_length=111)
-    email = serializers.CharField(source='client.user.email',
-                                  max_length=255)
+    client_email = serializers.CharField(source='client.user.email',
+                                         max_length=255)
     plan = serializers.CharField(source='plan.plan_type',
                                  max_length=10)
     service_name = serializers.CharField(source='service.name',
@@ -19,5 +19,5 @@ class SubscriptionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Subscription
         fields = ('id', 'plan_id', 'plan', 'client_username',
-                  'client_company_name', 'email',
+                  'client_company_name', 'client_email',
                   'service_name', 'service_full_price')
