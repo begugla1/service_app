@@ -8,15 +8,9 @@ from services.serializers import SubscriptionSerializer
 
 class SubscriptionView(ReadOnlyModelViewSet):
     queryset = Subscription.objects.all() \
-        .annotate(full_price_with_discount=
-                  F('service__full_price') - (F('service__full_price') *
-                                              F('plan__discount_percent') / 100.00)) \
-        .select_related('service', 'plan') \
-        .prefetch_related(Prefetch(
-            queryset=Client.objects.all().select_related('user') \
-            .only('user__email', 'user__username', 'company_name'),
-            lookup='client'
-        ))
+        .prefetch_related('plan', 'service',
+                          Prefetch(queryset=Client.objects.all().select_related('user')
+                                   .only('user__email', 'user__username', 'company_name'), lookup='client'))
     serializer_class = SubscriptionSerializer
 
     def list(self, request, *args, **kwargs):
