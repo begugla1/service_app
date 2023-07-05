@@ -50,8 +50,8 @@ class Subscription(models.Model):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.__plan = None
-        self.__service = None
+        self.__old_plan_id = self.plan_id
+        self.__old_service_id = self.service_id
 
     client = models.ForeignKey(Client, related_name='subscriptions',
                                on_delete=models.PROTECT, verbose_name='client')
@@ -65,7 +65,6 @@ class Subscription(models.Model):
     def save(self, *args, **kwargs):
         creating = not self.pk
         super().save(*args, **kwargs)
-        if creating or self.__plan != self.plan or self.__service != self.service:
+        if creating or (self.__old_plan_id != self.plan_id) \
+                or (self.__old_service_id != self.service_id):
             set_price_with_discount.delay(self.pk)
-            self.__plan = self.plan
-            self.__service = self.service
