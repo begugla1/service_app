@@ -4,3 +4,5 @@ psycopg2==2.8.6
 celery[redis]==5.2.7
 flower==1.2.0
 celery_singleton==0.3.1
+django-debug-toolbar-force==0.2
+django-debug-toolbar==4.1.0
