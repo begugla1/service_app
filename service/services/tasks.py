@@ -1,6 +1,6 @@
 import datetime
-
 from celery import shared_task
+
 from django.db import transaction
 from django.db.models import F, Subquery, OuterRef
 from celery_singleton import Singleton

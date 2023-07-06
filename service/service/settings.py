@@ -169,3 +169,13 @@ LOGGING = {
 
 # Celery
 CELERY_BROKER_URL = 'redis://redis:6379/0'
+
+# Cache
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://redis:6379",
+    }
+}
+
+TOTAL_AMOUNT_CACHE_NAME = 'total_amount_cache'
