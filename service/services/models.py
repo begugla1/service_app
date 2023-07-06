@@ -1,6 +1,5 @@
 from django.core.validators import MaxValueValidator
 from django.db import models
-from django.db.models.signals import post_delete
 
 from clients.models import Client
 from .tasks import *
