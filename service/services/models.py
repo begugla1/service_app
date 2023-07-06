@@ -61,6 +61,7 @@ class Subscription(models.Model):
                              on_delete=models.PROTECT, verbose_name='subscriptions')
     full_price_with_discount = models.DecimalField('Full_price_with_discount', max_digits=9,
                                                    decimal_places=2, default=0)
+    comment = models.TextField('Comment', null=True, blank=True)
 
     def save(self, *args, **kwargs):
         creating = not self.pk

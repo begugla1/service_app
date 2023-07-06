@@ -1,3 +1,5 @@
+import time
+
 from celery import shared_task
 from django.db.models import F, Subquery, OuterRef
 from celery_singleton import Singleton
@@ -5,6 +7,7 @@ from celery_singleton import Singleton
 
 @shared_task(base=Singleton)
 def set_full_price_with_discount_with_plan_id(plan_id):
+    time.sleep(10)
     from services.models import Subscription
 
     Subscription.objects.filter(plan_id=plan_id).update(
@@ -44,3 +47,5 @@ def set_price_with_discount(subscription_id):
                                    F('service__full_price') * F('plan__discount_percent') / 100))[0]
     subscription.full_price_with_discount = subscription.annotated_price
     subscription.save()
+
+
