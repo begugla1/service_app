@@ -68,3 +68,4 @@ class Subscription(models.Model):
         if creating or (self.__old_plan_id != self.plan_id) \
                 or (self.__old_service_id != self.service_id):
             set_price_with_discount.delay(self.pk)
+
