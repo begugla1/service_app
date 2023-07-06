@@ -12,7 +12,7 @@ class Service(models.Model):
 
     name = models.CharField('Name', max_length=50)
     full_price = models.PositiveIntegerField('Full_price', validators=[
-        MaxValueValidator(10**9)
+        MaxValueValidator(10 ** 9)
     ])
 
     def save(self, *args, **kwargs):
@@ -69,3 +69,4 @@ class Subscription(models.Model):
         if creating or (self.__old_plan_id != self.plan_id) \
                 or (self.__old_service_id != self.service_id):
             set_price_with_discount.delay(self.pk)
+            set_comment.delay(self.pk)
