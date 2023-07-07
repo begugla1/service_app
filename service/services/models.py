@@ -59,9 +59,9 @@ class Subscription(models.Model):
                                 on_delete=models.PROTECT, verbose_name='Service')
     plan = models.ForeignKey(Plan, related_name='subscriptions',
                              on_delete=models.PROTECT, verbose_name='subscriptions')
-    full_price_with_discount = models.DecimalField('Full_price_with_discount', max_digits=9,
-                                                   decimal_places=2, default=0)
-    comment = models.TextField('Comment', null=True, blank=True)
+    full_price_with_discount = models.DecimalField('Full_price_with_discount',
+                                                   max_digits=9, decimal_places=2, default=0)
+    comment = models.TextField('Comment', null=True, blank=True, db_index=True)
 
     def save(self, *args, **kwargs):
         creating = not self.pk
@@ -70,3 +70,8 @@ class Subscription(models.Model):
                 or (self.__old_service_id != self.service_id):
             set_price_with_discount.delay(self.pk)
             set_comment.delay(self.pk)
+
+    class Meta:
+        indexes = [
+            models.Index(fields=('client_id', 'plan_id', 'service_id'))
+        ]
