@@ -14,6 +14,7 @@ from services.models import Subscription, Plan, Service
 @receiver(post_delete, sender=Subscription)
 def reset_total_amount_cache(sender, instance, **kwargs):
     """
-    Clear total_amount cache if any Subscription, PLan or Service object was deleted
+    Clear total_amount cache if any Subscription,
+    PLan or Service object was deleted
     """
     cache.delete(settings.TOTAL_AMOUNT_CACHE_NAME)
